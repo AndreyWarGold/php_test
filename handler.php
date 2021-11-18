@@ -1,4 +1,5 @@
 <?php
+	require 'db.php';
   require 'uploads.php';
    function vivod(){
     if(empty(($_POST["name"])) || empty(($_POST["email"])) || empty(($_POST["gender"]))){
@@ -12,12 +13,14 @@
     }
    }
    function add($name, $email, $gender, $photo){
-    if (!file_exists('database/users.csv')) {
-      file_put_contents('database/users.csv', '');
-    }
-    $fp = fopen('database/users.csv', 'a');
-    fwrite($fp, "$name,$email,$gender,$photo\n");
-    fclose($fp);
+    $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
+   VALUES ('$email', '$name','$gender', '11111', '$photo')";
+	echo $sql;
+	$res = mysqli_query(get_conn(), $sql);
+	if ($res) {
+ 	  $valid = true;
+}
+
    }
 ?>
 <!doctype html>

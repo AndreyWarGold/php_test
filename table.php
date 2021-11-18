@@ -1,23 +1,25 @@
 <?php 
 function out(){
-if (file_exists('database/users.csv')) {
-   $f = file('database/users.csv');
-   echo "<table>";
-   for($i=0; $i<count($f); $i++){
-   	$user = explode(",", $f[$i]);
-   	$user[3] = explode("\n", $user[3])[0];
-   	echo "<tr>";
-   	$path = "";
-   	if(file_exists("public/images/" . ($user[3])) && $user[3] != ""){
-   		$path = 'public/images/' . ($user[3]);
-   	}else{
-   		$path = 'public/images/defoult.png';
-   	}
-   	printf("<td>%-20s</td><td>%-40s</td><td>%-15s</td><td><img src='%s' height='50' width='50'></img></td>", $user[0], $user[1], $user[2], $path);
-   	echo "</tr>";
-   }
-   echo '</table>';
-}	
+  require 'db.php';
+    $sql = "SELECT * FROM users";
+    $result = get_conn()->query($sql);
+    echo "<table>";
+    if ($result->num_rows > 0) {
+       // output data of each row
+       while($row = $result->fetch_assoc()) {
+              echo "<tr>";
+              $path = "";
+              if(file_exists("public/images/" . ($row['path_to_img'])) && $row['path_to_img'] != ""){
+                  $path = 'public/images/' . ($row['path_to_img']);
+                }else{
+                  $path = 'public/images/defoult.png';
+                }
+                printf("<td>%s</td><td>%s</td><td>%s</td><td><img src='%s' height='50' width='50'></td>", $row['name'], $row["email"], $row["gender"], $path);
+                 echo "</tr>";
+               
+       }
+       echo '</table>';
+}
 }
 ?>
 <!doctype html>
