@@ -15,7 +15,7 @@
    function add($name, $email, $gender, $photo){
     $sql = "INSERT INTO users (email, name, gender, password, path_to_img)
    VALUES ('$email', '$name','$gender', '11111', '$photo')";
-	echo $sql;
+	//echo $sql;
 	$res = mysqli_query(get_conn(), $sql);
 	if ($res) {
  	  $valid = true;

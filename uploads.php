@@ -8,7 +8,11 @@ function upload(){
 	   $filePath = $target_dir . basename($_FILES["photo"]["name"]);
 	   $isUploaded = true;
 	}
-	return basename($_FILES["photo"]["name"]);
+	if(basename($_FILES["photo"]["name"]) != ""){
+		return basename($_FILES["photo"]["name"]);
+	}else{
+		return "defoult.png";
+	}
 
 } 
 ?>
